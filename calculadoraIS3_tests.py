@@ -11,12 +11,14 @@ class TestCalculadoraIS3(unittest.TestCase):
         # Configuración inicial del navegador
         self.driver = webdriver.Edge()
         self.driver.get("https://gerabarud.github.io/is3-calculadora/") 
+        self.driver.minimize_window()
         time.sleep(2)  # Espera a que la página cargue completamente 
         self.input_operador1 = self.driver.find_element(By.ID, "number1Field")
         self.input_operador2 = self.driver.find_element(By.ID, "number2Field")
         self.input_operador1.clear()
         self.input_operador2.clear()
         self.selector_build= Select(self.driver.find_element(By.ID, "selectBuild"))
+        self.selector_build.select_by_visible_text("9")
         self.selector_operacion= Select(self.driver.find_element(By.ID, "selectOperationDropdown"))
         self.botonIntegers= self.driver.find_element(By.ID, "integerSelect")
         self.boton_calcular = self.driver.find_element(By.ID, "calculateButton")
@@ -168,7 +170,7 @@ class TestCalculadoraIS3(unittest.TestCase):
 
         # Verifica el resultado
         result = self.resultado.get_attribute("value")
-        self.assertEqual(result, "-10999999998", "CP 7 fallo.")
+        self.assertEqual(result, str(9999999999-(-9999999999)), "CP 7 fallo.")
 
     def test_caso_prueba8(self): # Prueba resta invalida op2
         # Configurar selectores
